@@ -6,12 +6,14 @@ import math
 import sys
 import os
 
-title_layout = widgets.Layout(width='500px',height='30px')
+title_layout = widgets.Layout(width='500px', height='30px')
 description_layout = widgets.Layout(width='500px')
 textfield_placeholder = 'Hier eintippen...'
 
-#diese Klasse wird automatisch erzeugt beim Erstellen einer Aufgabenserie
+# diese Klasse wird automatisch erzeugt beim Erstellen einer Aufgabenserie
 ''' Logger Klasse '''
+
+
 class Logger():
     def __init__(self, helptext):
         self.typed_solutions = []
@@ -22,32 +24,32 @@ class Logger():
         self.path = ""
         self.helptext = helptext
         self.used_help = False
-        
+
     def setStartTime(self, time):
         self.start_time = time
-        
+
     def setEndTime(self, time):
         self.end_time = time
-    
+
     def setUsedHelp(self, used_help):
         self.used_help = used_help
 
     def setPath(self, path):
         self.path = path
-        
+
     def addSolution(self, solution):
         self.typed_solutions.append(solution)
-        
+
     def setTries(self):
         self.tries_until_correct = len(self.typed_solutions)
-        
+
     def setFullTime(self):
-        self.full_time = round(self.end_time - self.start_time,2)
-        
+        self.full_time = round(self.end_time - self.start_time, 2)
+
     def terminate(self):
         self.setFullTime()
         self.setTries()
-        
+
     def writeToFile(self):
         help = ""
         if self.helptext == "":
@@ -58,353 +60,384 @@ class Logger():
             help = "false"
         with open(self.path, "a") as csvFile:
             writer = csv.writer(csvFile)
-            row = [str(self.tries_until_correct), str(self.typed_solutions).replace(",",";"), str(self.full_time),help]
+            row = [str(self.tries_until_correct), str(
+                self.typed_solutions).replace(",", ";"), str(self.full_time), help]
             writer.writerow(row)
         csvFile.close()
-        
+
 
 ''' Validierungungsfunktionen: '''
-#Diese Funktion überprüft, ob ein Eingabefeld leer ist
+# Diese Funktion überprüft, ob ein Eingabefeld leer ist
+
+
 def not_empty(button, userValue):
     if userValue != '':
-        button.button_style='success'
-        return True;
+        button.button_style = 'success'
+        return True
     else:
-        button.button_style='danger'
-        return False;
-        
-#Diese Funktion überprüft, ob eine gegebene Antwort mit der als "wahr" gesetzten Antwort überein stimmt
-#nachdem der "Absenden" Button gedrückt wurde        
+        button.button_style = 'danger'
+        return False
+
+# Diese Funktion überprüft, ob eine gegebene Antwort mit der als "wahr" gesetzten Antwort überein stimmt
+# nachdem der "Absenden" Button gedrückt wurde
+
+
 def eval_submission(button, userValue, truth):
     if userValue == truth or (type(truth) == list and userValue in truth):
-        button.button_style='success'
-        return True;
+        button.button_style = 'success'
+        return True
     else:
-        button.button_style='danger'
-        return False;
+        button.button_style = 'danger'
+        return False
 
-#Diese Funktion überprüft, ob eine gegebene Antwort mit der als "wahr" gesetzten Antwort überein stimmt
-#nachdem der "Absenden" Button gedrückt wurde, rundet ggf. den eingegebenen Wert    
+# Diese Funktion überprüft, ob eine gegebene Antwort mit der als "wahr" gesetzten Antwort überein stimmt
+# nachdem der "Absenden" Button gedrückt wurde, rundet ggf. den eingegebenen Wert
+
+
 def eval_float_submission(button, userValue, truth, step):
-    #überprüfen auf ungefähre Gleichheit (+step/1000000000 bewirkt aufrunden)
+    # überprüfen auf ungefähre Gleichheit (+step/1000000000 bewirkt aufrunden)
     if math.isclose(userValue+step/1000000000, truth, abs_tol=step/2.0):
-        button.button_style='success'
-        return True;
+        button.button_style = 'success'
+        return True
     else:
-        button.button_style='danger'
-        return False;
+        button.button_style = 'danger'
+        return False
+
 
 ''' Widget-Bausteine: '''
-#Dieser Button wird aktiviert, sobald eine Aufgabe richtig gelöst wurde
-#wird er betätigt, öffnen sich die nächste Aufgabe der Serie im Accordion
+# Dieser Button wird aktiviert, sobald eine Aufgabe richtig gelöst wurde
+# wird er betätigt, öffnen sich die nächste Aufgabe der Serie im Accordion
+
+
 def NextButton():
     return widgets.Button(
         description='Nächste Aufgabe',
         disabled=True,
-        tooltip='Löse zuerst korrekt die Aufgabe',
+        tooltip='Lösen Sie zuerst korrekt die Aufgabe.',
         icon='fa-arrow-right'
-        )
+    )
 
-#Diese Klasse ermöglicht das Erstellen einer Multiple Choice Frage
-#die übergebenen options sind die Auswahlmöglichkeiten
+# Diese Klasse ermöglicht das Erstellen einer Multiple Choice Frage
+# die übergebenen options sind die Auswahlmöglichkeiten
+
+
 class MultipleChoiceWidget():
     def __init__(self, options):
         self.items = []
         for current_option in options:
             option = widgets.Checkbox(value=False,
-                                      description= current_option,
+                                      description=current_option,
                                       disabled=False,
-                                      #damit Text nicht mit "..." abgekürzt wird
+                                      # damit Text nicht mit "..." abgekürzt wird
                                       layout=widgets.Layout(width='90%')
-                                    )
+                                      )
             self.items.append(option)
         self.box = widgets.VBox(self.items)
+
     def getValues(self):
         result = []
         for i in self.items:
             result.append(i.value)
         return result
-    
+
     def getVBox(self):
         return self.box
-    
+
     def display(self):
         self.box = widgets.VBox(self.items)
         display(self.box)
 
-#Dieser Button löst bei Betätigung die Überprüfung der eingebenenen Lösung aus        
+# Dieser Button löst bei Betätigung die Überprüfung der eingebenenen Lösung aus
+
+
 def SubmissionButton():
     return widgets.Button(
-                            description='Absenden',
-                            disabled=False,
-                            button_style='', # 'success', 'info', 'warning', 'danger' or ''
-                            tooltip='Click me',
-                            icon='check',
-                            layout=widgets.Layout(margin='40px 0px 0px 0px')
-                          )
-                          
-#Diese Klasse definiert den unteren Aufbau einer Aufgabe
-#Sie stellt eine Hilfsklasse dar und wird automatisch ausgeführt beim Erstellen einer Aufgabe
+        description='Absenden',
+        disabled=False,
+        button_style='',  # 'success', 'info', 'warning', 'danger' or ''
+        tooltip='Anclicken, um abzusenden.',
+        icon='check',
+        layout=widgets.Layout(margin='40px 0px 0px 0px')
+    )
+
+# Diese Klasse definiert den unteren Aufbau einer Aufgabe
+# Sie stellt eine Hilfsklasse dar und wird automatisch ausgeführt beim Erstellen einer Aufgabe
+
+
 class Footer():
     def __init__(self, helptext):
         self.submissionButton = SubmissionButton()
-        
+
         self.helpButton = widgets.Button(
-                            description='Tipp',
-                            disabled=False,
-                            button_style='', # 'success', 'info', 'warning', 'danger' or ''
-                            tooltip='Click me',
-                            icon='question',
-                            layout=widgets.Layout(margin='40px 0px 0px 0px')
-                            )
-        self.helpButton.style.button_color='white'
-        
+            description='Tipp',
+            disabled=False,
+            button_style='',  # 'success', 'info', 'warning', 'danger' or ''
+            tooltip='Anclicken, um abzusenden.',
+            icon='question',
+            layout=widgets.Layout(margin='40px 0px 0px 0px')
+        )
+        self.helpButton.style.button_color = 'white'
+
         self.helpField = widgets.HTML(value='')
-        self.helptext=helptext
-    
+        self.helptext = helptext
+
         def show_help(button):
-            self.helpField.value="<i>" +  self.helptext + "</i>"
+            self.helpField.value = "<i>" + self.helptext + "</i>"
         self.helpButton.on_click(show_help)
 
-            
     def getLayoutedWidget(self):
-        #TODO: schönere Ausgabe mit richtigem widgets.Layout
+        # TODO: schönere Ausgabe mit richtigem widgets.Layout
         if self.helptext == "":
             return self.submissionButton
         else:
-            return widgets.VBox([widgets.HBox([self.submissionButton, self.helpButton]),self.helpField])
-                            
+            return widgets.VBox([widgets.HBox([self.submissionButton, self.helpButton]), self.helpField])
+
 
 '''Basisklasse (Überschrift + Text)'''
-#Dies ist die Basisklasse einer Aufgabe
-#Alle Aufgabentypen erben von ihr
+# Dies ist die Basisklasse einer Aufgabe
+# Alle Aufgabentypen erben von ihr
+
+
 class Exercise:
     def __init__(self, title, description, subtitle=''):
         self.items = []
-        if subtitle != "": 
+        if subtitle != "":
             self.createHeader(subtitle, description)
         else:
             self.createHeader(title, description)
         self.submissionBtn = None
         self.titleClean = title
         self.logger = Logger('')
-        
-    
-    def createHeader(self, title, description):
-        #Überschrift:
-        self.title = widgets.HTML(value= headline(title))        
 
-        #Aufgabenstellung:
-        self.description = widgets.HTML(value='<p>' + description + '</p>' )
-        
+    def createHeader(self, title, description):
+        # Überschrift:
+        self.title = widgets.HTML(value=headline(title))
+
+        # Aufgabenstellung:
+        self.description = widgets.HTML(value='<p>' + description + '</p>')
+
         self.items.extend([self.title, self.description])
-    
+
     def createBody(self):
         pass
-        
+
     def display(self):
         self.box = widgets.VBox(self.items)
         display(self.box)
 
+
 '''Accordion Tab Klasse: definiert ein Tab eines Accordions'''
-#Diese Klasse defniert das Aussehen eines Tabs eines Accordions
-#Also wie eine einzelne Aufgabe in der Serie dargestellt wird
+# Diese Klasse defniert das Aussehen eines Tabs eines Accordions
+# Also wie eine einzelne Aufgabe in der Serie dargestellt wird
+
+
 class AccordionTab:
-    
+
     def __init__(self, title, exercise):
         self.title = title
         self.nextBtn = NextButton()
         items = exercise.items + [self.nextBtn]
         self.box = widgets.VBox(items)
-        
-        #Check wird benötigt, um zu überprüfen, ob dies die Introduction ist -> wird gesondert behandelt
+
+        # Check wird benötigt, um zu überprüfen, ob dies die Introduction ist -> wird gesondert behandelt
         if exercise.submissionBtn != None:
             self.add_button_change_listener(exercise.submissionBtn)
         else:
             self.nextBtn.disabled = False
-    
-    #überprüft, ob eine Aufgabe korrekt gelöst wurde, anhand der Farbe des "Absenden" Buttons
+
+    # überprüft, ob eine Aufgabe korrekt gelöst wurde, anhand der Farbe des "Absenden" Buttons
     def add_button_change_listener(self, b):
-        
+
         def handle_button_change(change):
             if change.new == "success":
-                #aktiviert Next Button
+                # aktiviert Next Button
                 self.nextBtn.disabled = False
-                #fügt ein neues Tooltip Label hinzu
-                self.nextBtn.tooltip = "Klicke, um die nächste Aufgabe zu öffnen"
-                #deakiviert Absenden Button
+                # fügt ein neues Tooltip Label hinzu
+                self.nextBtn.tooltip = "Anclicken, um die nächste Aufgabe zu öffnen."
+                # deakiviert Absenden Button
                 b.disabled = True
-            #else:
+            # else:
             #    self.text.value=change
-                
-        b.observe(handle_button_change, names="button_style") 
-        
+
+        b.observe(handle_button_change, names="button_style")
+
+
 '''Series-Klasse: erstellt eine Aufgaben Serie aus übergebenen Aufgaben mit einem Accordion'''
-#erstellt eine Aufgabenserie aus den ihr übergebenen Aufgaben
-#loggt Meta Daten in ein File entsprechend des path
+# erstellt eine Aufgabenserie aus den ihr übergebenen Aufgaben
+# loggt Meta Daten in ein File entsprechend des path
+
+
 class Series:
     def __init__(self, exercises, path):
         self.accordion = widgets.Accordion()
         self.exercises = exercises
         self.currentExercise = 0
         self.path = str(os.getlogin()) + "_" + path
-        
+
         self.initLoggingFile()
         self.addPathToLoggers()
-        #zuerst wird die Einleitung hinzugefügt
+        # zuerst wird die Einleitung hinzugefügt
         self.addIntroduction(exercises[0])
-    
+
     def addPathToLoggers(self):
         for exercise in self.exercises:
             if hasattr(exercise, "logger"):
                 exercise.logger.setPath(self.path)
-            
+
     def initLoggingFile(self):
-        loggingHeader = ["Anzahl_Versuche","Lösungen","Zeit","Hilfe_genutzt"]
+        loggingHeader = ["Anzahl_Versuche",
+                         "Lösungen", "Zeit", "Hilfe_genutzt"]
         with open(self.path, "w") as csvFile:
             writer = csv.writer(csvFile)
             writer.writerow(loggingHeader)
         csvFile.close()
-        
-    def addIntroduction(self,introduction):
-        accordion_tab = AccordionTab(introduction.titleClean,introduction)
+
+    def addIntroduction(self, introduction):
+        accordion_tab = AccordionTab(introduction.titleClean, introduction)
         self.accordion.children += (accordion_tab.box,)
         self.accordion.set_title(self.currentExercise, accordion_tab.title)
         self.accordion.selected_index = 0
-       
+
         def next_btn_clicked(b):
             if self.currentExercise+1 <= len(self.exercises)-1:
                 self.currentExercise += 1
                 self.addExercise(self.exercises[self.currentExercise])
                 self.accordion.selected_index = self.currentExercise
                 b.disabled = True
-                
-                #startet den Timer des nächsten Loggers
-                self.exercises[self.currentExercise].logger.setStartTime(time.time())
+
+                # startet den Timer des nächsten Loggers
+                self.exercises[self.currentExercise].logger.setStartTime(
+                    time.time())
 
         accordion_tab.nextBtn.on_click(next_btn_clicked)
-        
-    
-    def addExercise(self,exercise):
+
+    def addExercise(self, exercise):
         last_solution = True
-        accordion_tab = AccordionTab(str(exercise.titleClean),exercise)
+        accordion_tab = AccordionTab(str(exercise.titleClean), exercise)
         self.accordion.children += (accordion_tab.box,)
-        self.accordion.set_title(str(self.currentExercise),str(accordion_tab.title))
-        
-        #Titel des letzten "Nächste Aufgabe" Button ändern
-        if(len(self.accordion.children)==len(self.exercises)):
+        self.accordion.set_title(
+            str(self.currentExercise), str(accordion_tab.title))
+
+        # Titel des letzten "Nächste Aufgabe" Button ändern
+        if(len(self.accordion.children) == len(self.exercises)):
             accordion_tab.nextBtn.description = 'Beende Serie'
 
-        
         def next_btn_clicked(b):
             last_solution = True
             if self.currentExercise+1 <= len(self.exercises)-1:
 
-                #beende Timer für aktuelle Aufgabe
-                self.exercises[self.currentExercise].logger.setEndTime(time.time())
+                # beende Timer für aktuelle Aufgabe
+                self.exercises[self.currentExercise].logger.setEndTime(
+                    time.time())
                 self.exercises[self.currentExercise].logger.terminate()
                 self.exercises[self.currentExercise].logger.writeToFile()
 
                 self.currentExercise += 1
-                #starte nächsten Timer
-                self.exercises[self.currentExercise].logger.setStartTime(time.time())
-                
-                #füge neue Aufgabe hinzu
+                # starte nächsten Timer
+                self.exercises[self.currentExercise].logger.setStartTime(
+                    time.time())
+
+                # füge neue Aufgabe hinzu
                 self.addExercise(self.exercises[self.currentExercise])
-                
-                #wähle neuen Tab aus
+
+                # wähle neuen Tab aus
                 self.accordion.selected_index = self.currentExercise
-                
-                #deaktiviere alten "Nächste Aufgabe" Button
+
+                # deaktiviere alten "Nächste Aufgabe" Button
                 b.disabled = True
-                
+
                 last_solution = False
-                
-            if len(self.accordion.children)==len(self.exercises) and last_solution:
-                #also "Beende Serie" wurde gedrückt
-                #beende timer
-                self.exercises[self.currentExercise].logger.setEndTime(time.time())
+
+            if len(self.accordion.children) == len(self.exercises) and last_solution:
+                # also "Beende Serie" wurde gedrückt
+                # beende timer
+                self.exercises[self.currentExercise].logger.setEndTime(
+                    time.time())
                 self.exercises[self.currentExercise].logger.terminate()
                 self.exercises[self.currentExercise].logger.writeToFile()
-                
-                b.disabled = True
-                
-        #add next_btn_clicked function to next button
-        accordion_tab.nextBtn.on_click(next_btn_clicked) 
 
-        
+                b.disabled = True
+
+        # add next_btn_clicked function to next button
+        accordion_tab.nextBtn.on_click(next_btn_clicked)
+
+
 '''Textfeld-Klasse (Absenden überprüft auf nicht-leeren Textinhalt)'''
+
+
 class TextFieldExercise(Exercise):
-    
+
     def __init__(self, title, description, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
         self.createBody(helptext)
         self.logger = Logger(helptext)
 
     def createBody(self, helptext):
-        #Antwortmöglichkeit
+        # Antwortmöglichkeit
         self.interactiveElement = widgets.Text(
-                                        value='',
-                                        placeholder=textfield_placeholder,
-                                        description='Antwort:',
-                                        disabled=False
-            )
-        
+            value='',
+            placeholder=textfield_placeholder,
+            description='Antwort:',
+            disabled=False
+        )
+
         self.items.append(self.interactiveElement)
-        
-        #Footer:
+
+        # Footer:
         footer = Footer(helptext)
-                
+
         def send_submission(button):
-            #"," durch "." ersetzen, da Logging File im csv Format ist
+            # "," durch "." ersetzen, da Logging File im csv Format ist
             solution = self.interactiveElement.value
             if (type(solution) == str):
                 if ("," in solution):
                     solution = solution.replace(",", ".")
             self.logger.addSolution(solution)
             not_empty(footer.submissionButton, self.interactiveElement.value)
-        
+
         def send_logger(b):
             self.logger.setUsedHelp(True)
-        
+
         footer.helpButton.on_click(send_logger)
-    
+
         footer.submissionButton.on_click(send_submission)
         self.items.append(footer.getLayoutedWidget())
-        
+
         self.submissionBtn = footer.submissionButton
- 
-#wie Textfeld, jedoch sind mehrzeilige Texte möglich        
+
+# wie Textfeld, jedoch sind mehrzeilige Texte möglich
+
+
 class TextAreaExercise(Exercise):
-    
+
     def __init__(self, title, description, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
         self.createBody(helptext)
         self.logger = Logger(helptext)
 
     def createBody(self, helptext):
-        #Antwortmöglichkeit
+        # Antwortmöglichkeit
         self.interactiveElement = widgets.Textarea(
-                                        value='',
-                                        placeholder=textfield_placeholder,
-                                        description='Antwort:',
-                                        disabled=False
-            )
-        
+            value='',
+            placeholder=textfield_placeholder,
+            description='Antwort:',
+            disabled=False
+        )
+
         self.items.append(self.interactiveElement)
-        
-        #Footer:
+
+        # Footer:
         footer = Footer(helptext)
-                
+
         def send_submission(button):
             self.logger.addSolution(self.interactiveElement.value)
             not_empty(footer.submissionButton, self.interactiveElement.value)
-        
+
         def send_logger(b):
             self.logger.setUsedHelp(True)
-        
+
         footer.helpButton.on_click(send_logger)
-    
+
         footer.submissionButton.on_click(send_submission)
         self.items.append(footer.getLayoutedWidget())
 
@@ -412,83 +445,92 @@ class TextAreaExercise(Exercise):
 
 
 '''Ganzzahlfeld-klasse (Absenden überprüft auf Gleichheit mit true-value)'''
+
+
 class IntFieldExercise(Exercise):
-    
+
     def __init__(self, title, description, true_value, min_value=0, max_value=100, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
         self.createBody(helptext, true_value, min_value, max_value)
         self.logger = Logger(helptext)
 
     def createBody(self, helptext, true_value, min_value, max_value):
-        #Antwortmöglichkeit
+        # Antwortmöglichkeit
         self.interactiveElement = widgets.BoundedIntText(
-                                    value=0,
-                                    min=min_value,
-                                    max=max_value,
-                                    step=1,
-                                    description='Antwort:',
-                                    disabled=False
-                                )
-        
+            value=0,
+            min=min_value,
+            max=max_value,
+            step=1,
+            description='Antwort:',
+            disabled=False
+        )
+
         self.items.append(self.interactiveElement)
-        
-        #Footer:
+
+        # Footer:
         footer = Footer(helptext)
-                
+
         def send_submission(button):
             self.logger.addSolution(self.interactiveElement.value)
-            eval_submission(footer.submissionButton, self.interactiveElement.value, true_value)
-        
+            eval_submission(footer.submissionButton,
+                            self.interactiveElement.value, true_value)
+
         def send_logger(b):
             self.logger.setUsedHelp(True)
-        
+
         footer.helpButton.on_click(send_logger)
-            
+
         footer.submissionButton.on_click(send_submission)
         self.items.append(footer.getLayoutedWidget())
-        
+
         self.submissionBtn = footer.submissionButton
-        
+
+
 '''Floatfeld-klasse (Absenden überprüft auf Gleichheit mit true-value)'''
+
+
 class FloatFieldExercise(Exercise):
-    
+
     def __init__(self, title, description, true_value, min_value=0, max_value=100, step=0.1, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
         self.createBody(helptext, true_value, min_value, max_value, step)
         self.logger = Logger(helptext)
 
     def createBody(self, helptext, true_value, min_value, max_value, step):
-        #Antwortmöglichkeit
+        # Antwortmöglichkeit
         self.interactiveElement = widgets.BoundedFloatText(
-                                    value=0,
-                                    min=min_value,
-                                    max=max_value,
-                                    step=step,
-                                    description='Antwort:',
-                                    disabled=False
-                                )
-        
+            value=0,
+            min=min_value,
+            max=max_value,
+            step=step,
+            description='Antwort:',
+            disabled=False
+        )
+
         self.items.append(self.interactiveElement)
-        
-        #Footer:
+
+        # Footer:
         footer = Footer(helptext)
-                
+
         def send_submission(button):
             self.logger.addSolution(self.interactiveElement.value)
-            eval_float_submission(footer.submissionButton, self.interactiveElement.value, true_value, step)
-        
+            eval_float_submission(
+                footer.submissionButton, self.interactiveElement.value, true_value, step)
+
         def send_logger(b):
             self.logger.setUsedHelp(True)
-        
+
         footer.helpButton.on_click(send_logger)
-            
+
         footer.submissionButton.on_click(send_submission)
         self.items.append(footer.getLayoutedWidget())
-        
+
         self.submissionBtn = footer.submissionButton
 
 
-''' ... '''
+''' Textfield must not be empty. Every option is True '''
+
+
 class MultiChoiceWithTextfield(Exercise):
 
     def __init__(self, title, description, options, preselection=None, helptext='', subtitle=''):
@@ -497,7 +539,7 @@ class MultiChoiceWithTextfield(Exercise):
         self.logger = Logger(helptext)
 
     def createBody(self, helptext, options, preselection):
-        #Anwortmöglichkeiten
+        # Anwortmöglichkeiten
         # Antwortmöglichkeit
         self.interactiveElement = widgets.RadioButtons(
             options=options,
@@ -507,7 +549,7 @@ class MultiChoiceWithTextfield(Exercise):
             value=preselection
         )
 
-        ###Textarea, falls "Sonstiges" ausgewählt wird
+        # Textarea, falls "Sonstiges" ausgewählt wird
         textfield = widgets.Textarea(
             value='',
             placeholder=textfield_placeholder,
@@ -526,8 +568,9 @@ class MultiChoiceWithTextfield(Exercise):
         footer = Footer(helptext)
 
         def send_submission(button):
-            #logge gewählte Option + Begründung
-            self.logger.addSolution(self.interactiveElement.value  + ": " + textfield.value)
+            # logge gewählte Option + Begründung
+            self.logger.addSolution(
+                self.interactiveElement.value + ": " + textfield.value)
             not_empty(footer.submissionButton, textfield.value)
 
         def send_logger(b):
@@ -541,49 +584,51 @@ class MultiChoiceWithTextfield(Exercise):
         self.submissionBtn = footer.submissionButton
 
 
-
-
-
 '''SingleChoice-Klasse (Absenden überprüft ob angeklicktes Feld mit true_option übereinstimmt)'''
+
+
 class SingleChoiceExercise(Exercise):
-    
+
     def __init__(self, title, description, options, true_option, preselection=None, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
         self.createBody(helptext, options, true_option, preselection)
         self.logger = Logger(helptext)
 
     def createBody(self,  helptext, options, true_option, preselection):
-        #Antwortmöglichkeit
+        # Antwortmöglichkeit
         self.interactiveElement = widgets.RadioButtons(
-                                    options=options,
-                                    description='Antwort:',
-                                    disabled=False,
-                                    value=preselection
-                                )
-        
+            options=options,
+            description='Antwort:',
+            disabled=False,
+            value=preselection
+        )
+
         self.items.append(self.interactiveElement)
-        
-        #Footer:
+
+        # Footer:
         footer = Footer(helptext)
-                
+
         def send_submission(button):
             self.logger.addSolution(self.interactiveElement.value)
-            eval_submission(footer.submissionButton, self.interactiveElement.value, true_option)
-            
+            eval_submission(footer.submissionButton,
+                            self.interactiveElement.value, true_option)
+
         def send_logger(b):
             self.logger.setUsedHelp(True)
-        
+
         footer.helpButton.on_click(send_logger)
 
         footer.submissionButton.on_click(send_submission)
         self.items.append(footer.getLayoutedWidget())
-        
+
         self.submissionBtn = footer.submissionButton
+
 
 class SingleChoiceWithTextfield(Exercise):
     def __init__(self, title, description, options, true_option, alternative_option, preselection=None, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
-        self.createBody(helptext, options, true_option, alternative_option, preselection)
+        self.createBody(helptext, options, true_option,
+                        alternative_option, preselection)
         self.logger = Logger(helptext)
 
     def createBody(self, helptext, options, true_option, alternative_option, preselection):
@@ -595,7 +640,7 @@ class SingleChoiceWithTextfield(Exercise):
             value=preselection
         )
 
-        ###Textarea, falls "Sonstiges" ausgewählt wird
+        # Textarea, falls "Sonstiges" ausgewählt wird
         textfield = widgets.Textarea(
             value='',
             placeholder=textfield_placeholder,
@@ -615,7 +660,6 @@ class SingleChoiceWithTextfield(Exercise):
 
         self.interactiveElement.observe(on_value_change, names='value')
 
-
         self.items.append(self.interactiveElement)
         self.items.append(textfield)
 
@@ -629,17 +673,17 @@ class SingleChoiceWithTextfield(Exercise):
             if self.interactiveElement.value == true_option:
                 text = textfield.value
                 self.logger.addSolution(text)
-                if(text == ""):
-                    eval_submission(footer.submissionButton, "%", true_option)
-                else:
-                    eval_submission(footer.submissionButton, self.interactiveElement.value, true_option)
+                eval_submission(footer.submissionButton,
+                                self.interactiveElement.value, true_option)
             elif self.interactiveElement.value == alternative_option and textfield.value != '':
                 text = textfield.value
                 self.logger.addSolution(text)
-                eval_submission(footer.submissionButton, self.interactiveElement.value, alternative_option)
+                eval_submission(footer.submissionButton,
+                                self.interactiveElement.value, alternative_option)
             else:
                 self.logger.addSolution(self.interactiveElement.value)
-                eval_submission(footer.submissionButton, self.interactiveElement.value, true_option)
+                eval_submission(footer.submissionButton,
+                                self.interactiveElement.value, true_option)
 
         def send_logger(b):
             self.logger.setUsedHelp(True)
@@ -652,78 +696,89 @@ class SingleChoiceWithTextfield(Exercise):
         self.submissionBtn = footer.submissionButton
 
 
-        
 '''SingleChoice-Klasse (Absenden überprüft ob angeklicktes Feld mit true_option übereinstimmt)'''
+
+
 class CheckboxExercise(Exercise):
-    
+
     def __init__(self, title, description, label, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
         self.createBody(helptext, label)
         self.logger = Logger(helptext)
 
-    def createBody(self,helptext,label):
-        #Antwortmöglichkeit
+    def createBody(self, helptext, label):
+        # Antwortmöglichkeit
         self.interactiveElement = widgets.Checkbox(
-                                    value=False,
-                                    description=label,
-                                    disabled=False
-                                )
-        
+            value=False,
+            description=label,
+            disabled=False
+        )
+
         self.items.append(self.interactiveElement)
-        
-        #Footer:
+
+        # Footer:
         footer = Footer(helptext)
-                
+
         def send_submission(button):
             self.logger.addSolution(self.interactiveElement.value)
-            eval_submission(footer.submissionButton, self.interactiveElement.value, True)
+            eval_submission(footer.submissionButton,
+                            self.interactiveElement.value, True)
 
         def send_logger(b):
             self.logger.setUsedHelp(True)
-        
+
         footer.helpButton.on_click(send_logger)
 
         footer.submissionButton.on_click(send_submission)
-        self.items.append(footer.getLayoutedWidget())  
-        
+        self.items.append(footer.getLayoutedWidget())
+
         self.submissionBtn = footer.submissionButton
 
+
 '''MultipleChoice-Klasse (Absenden überprüft ob angeklickte Felder mit true_choices (Liste aus Booleans) übereinstimmt)'''
+
+
 class MultipleChoiceExercise(Exercise):
-    
+
     def __init__(self, title, description, options, true_options, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
         self.createBody(helptext, options, true_options)
         self.logger = Logger(helptext)
 
     def createBody(self, helptext, options, true_options):
-        #Antwortmöglichkeit
+        # Antwortmöglichkeit
         self.interactiveElement = MultipleChoiceWidget(options)
-        
+
         self.items.append(self.interactiveElement.getVBox())
-        
-        #Footer:
+
+        # Footer:
         footer = Footer(helptext)
-        
+
         def send_submission(button):
             self.logger.addSolution(self.interactiveElement.getValues())
-            eval_submission(footer.submissionButton, self.interactiveElement.getValues(), true_options)
-            
+            eval_submission(footer.submissionButton,
+                            self.interactiveElement.getValues(), true_options)
+
         def send_logger(b):
             self.logger.setUsedHelp(True)
-        
+
         footer.helpButton.on_click(send_logger)
 
         footer.submissionButton.on_click(send_submission)
         self.items.append(footer.getLayoutedWidget())
-        
+
         self.submissionBtn = footer.submissionButton
-        
+
+
 '''HTML Makros'''
-#benötigt für eine schönere Formatierung
+# benötigt für eine schönere Formatierung
+
+
 def href(url, text):
-    output =  '''<a href="''' + url + '''" target="_blank" title="''' + text + '''" style="color:blue; text-decoration: underline;">''' + text + '''</a>'''
+    output = '''<a href="''' + url + '''" target="_blank" title="''' + text + \
+        '''" style="color:blue; text-decoration: underline;">''' + text + '''</a>'''
     return output
 
+
 def headline(text):
-     return ' <b> <font size="+1">' +  text + '</font size="+1"></b>'
+    return ' <b> <font size="+1">' + text + '</font size="+1"></b>'
