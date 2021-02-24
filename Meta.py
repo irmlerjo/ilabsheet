@@ -68,7 +68,7 @@ def start():
     ##############Studiengang##################################
     description = "1) Bitte wählen Sie unten Ihren Studiengang aus."
     t1 = widgets.HTML(value='<p>' + description + '</p>' )
-    options = ["M.Sc. Informatik","M.Sc. Bioinformatik","M.Sc. Wirtschaftsinformatik","M.Sc. Digital Humanities","Sonstige"]
+    options = ['Studiengang 1', 'Studiengang 2', 'Studiengang 3','Studiengang 4',"Sonstige"]
     s1 = widgets.RadioButtons(
                                         options=options,
                                         description='         ',
@@ -97,7 +97,7 @@ def start():
     #############Andere Module#################################
     description2 = "2) Haben Sie bereits eines der folgenden Module besucht?"
     t2 = widgets.HTML(value='<p>' + description2 + '</p>' )
-    options2 = ["Künstliche Neuronale Netze und Maschinelles Lernen (10-202-2128)", "Neuroinspirierte Informationsverarbeitung (10-202-2104)", "Statistisches Lernen (09-INF-BIO1)"]
+    options2 = ['Modul 1', 'Modul 2', 'Modul 3']
     items = []
     for current_option in options2:
         option = widgets.Checkbox(value=False,
@@ -138,7 +138,7 @@ def start():
     hbox2 = widgets.HBox([t6,blanks,slider2.hbox])
    
     ##Selbsteinschätzung: Kenntnisse in Mathematik/ Statistik/ Datenanalyse
-    description7 = "&nbsp;&nbsp;&nbsp;4.3)Statistik/ Datenanalyse"
+    description7 = "&nbsp;&nbsp;&nbsp;4.3) Statistik/ Datenanalyse"
     t7 = widgets.HTML(value='<p>' + description7 + '</p>', layout=widgets.Layout(width='250px'))
     slider3 = Slider()
     hbox3 = widgets.HBox([t7,blanks,slider3.hbox])
