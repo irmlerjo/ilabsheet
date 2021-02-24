@@ -4,5 +4,8 @@
 # ignore pycache
 __pycache__
 
+# ignore logger files
+*Logger.csv
+
 # exclude .gitignore
 !/.gitignore
