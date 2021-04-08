@@ -11,7 +11,7 @@ fi
 chromium-browser --app="data:text/html,<html><body><script>window.moveTo(0,0);window.resizeTo(900,1020);window.location='http://localhost:8888';</script></body></html>" &
 
 
-voila_test=$(eval "lsof -i :8866")
+voila_test=$(eval "curl localhost:8866")
 if [[ ! $voila_test =~ "voila" ]]
 then
 	voila --no-browser > /dev/null 2>&1 &
@@ -22,7 +22,7 @@ fi
 #chromium-browser --app="data:text/html,<html><body><script>window.moveTo(1000,0);window.resizeTo(900,1020);window.location='http://localhost:8866/voila/render/Aufgaben/HandsOn_1.ipynb';</script></body></html>" &
 
 s1="data:text/html,<html><body><script>window.moveTo(1000,0);window.resizeTo(900,1020);window.location='http://localhost:8866/voila/render/Aufgaben/"
-s2=".ipynb';</script></body></html>"
+s2="';</script></body></html>"
 s3=$s1$1$s2
 
 chromium-browser --app=$s3
