@@ -12,8 +12,13 @@ Die notwendigen Python-Packages können mit dem folgenden Befehl installiert wer
 ```sh
 pip install -r requirements.txt
 ```
+### Linux und MacOS
 
-Zusätlich wird zur Nutzung der fertigen Aufgabenserien [Chromium Browser](https://www.chromium.org/getting-involved/download-chromium) benötigt.
+Zusätlich wird auf Linux und MacOS zur Nutzung der fertigen Aufgabenserien [Chromium Browser](https://www.chromium.org/getting-involved/download-chromium) benötigt.
+
+### Windows
+
+Auf Windows wird zur Nutzung der fertigen Aufgabenserien [Google Chrome](https://www.google.com/chrome/) benötigt. Zusätlich wird [PowerShell 7.1](https://docs.microsoft.com/de-de/powershell/scripting/install/installing-powershell-core-on-windows?view=powershell-7.1) benötigt, um die Anwendung zu starten. Laden und installieren Sie hierfür die entsprechende `.msi`-Datei für Ihren Rechner auf [PowerShell Release v7.1.3](https://github.com/PowerShell/PowerShell/releases/tag/v7.1.3). Alternativ finden Sie hier die Links für [32-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x86.msi) und [64-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi).
 
 ## Aufbau einer Aufgabenserie
 Der Aufbau einer Aufgabenserie ist wie am folgenden Bild dargestellt.
@@ -78,15 +83,24 @@ Zum jetztigen Zeitpunkt sind die richtigen Antworten der Aufgabenserien als fest
 
 ### Bedienung von Fertigen Aufgabenserien:
 Es stehen bereits fertige Aufgabeserien zur Verfügung, welche durch ein *Linux Bash Skript* in einem geteilten Fenster geöffnet werden können. Auf der einen Hälfte des Bildschirmes wird das virtuelle, interaktive Aufgabenblatt zum Eintragen der Lösungen geöffnet, während auf der anderen Hälfte ein jupyter notebook zum Programmieren geöffnet wird. 
-Dazu wird das Python Package *voila* genutzt und der frei zugängliche Browser *Chromium*. Zu beachten ist, dass die Skripte nur für Linux und Chromium funktionieren. Ein beispielhafter Aufruf könnte wie folgt aussehen:
+Dazu wird das Python Package *voila* genutzt und der frei zugängliche Browser *Chromium*. Zu beachten ist, dass die Skripte nur für Linux und Chromium funktionieren. Ein beispielhafter Aufruf auf könnte wie folgt aussehen:
+
+für Linux:
+
 ```sh
-sh ./start-split-screen.sh NameDerAufgabenSerie
+sh ./start-split-screen.sh NameDerAufgabenSerie.ipynb
 ```
 
-oder für MacOS:
-
+für MacOS:
 ```sh
-sh ./start-split-screen-macOS.sh NameDerAufgabenSerie
+sh ./start-split-screen-macOS.sh NameDerAufgabenSerie.ipynb
+
+```
+
+für Windows (innerhalb der PowerShell 7.1):
+
+```ps1
+.\start-split-screen-windows.ps1 NameDerAufgabenSerie.ipynb
 ```
 
 ### Logging:
