@@ -18,7 +18,7 @@ Zusätlich wird auf Linux und MacOS zur Nutzung der fertigen Aufgabenserien [Chr
 
 ### Windows
 
-Auf Windows wird zur Nutzung der fertigen Aufgabenserien [Google Chrome](https://www.google.com/chrome/) benötigt. Zusätlich wird [PowerShell 7.1](https://docs.microsoft.com/de-de/powershell/scripting/install/installing-powershell-core-on-windows?view=powershell-7.1) benötigt, um die Anwendung zu starten. Laden und installieren Sie hierfür die entsprechende `.msi`-Datei für Ihren Rechner auf [PowerShell Release v7.1.3](https://github.com/PowerShell/PowerShell/releases/tag/v7.1.3). Alternativ finden Sie hier die Links für [32-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x86.msi) und [64-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi).
+Auf Windows wird zur Nutzung der fertigen Aufgabenserien eine Installation von [Google Chrome](https://www.google.com/chrome/) (im Standard-Installationsordner) benötigt. Zusätlich wird [PowerShell 7.1](https://docs.microsoft.com/de-de/powershell/scripting/install/installing-powershell-core-on-windows?view=powershell-7.1) benötigt, um die Anwendung zu starten. Laden und installieren Sie hierfür die entsprechende `.msi`-Datei für Ihren Rechner auf [PowerShell Release v7.1.3](https://github.com/PowerShell/PowerShell/releases/tag/v7.1.3). Alternativ finden Sie hier die Links für [32-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x86.msi) und [64-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi).
 
 ## Aufbau einer Aufgabenserie
 Der Aufbau einer Aufgabenserie ist wie am folgenden Bild dargestellt.
