@@ -5,6 +5,7 @@ import csv
 import math
 import sys
 import os
+import numpy as np
 
 title_layout = widgets.Layout(width='500px', height='30px')
 description_layout = widgets.Layout(width='500px')
@@ -83,12 +84,19 @@ def not_empty(button, userValue):
 
 
 def eval_submission(button, userValue, truth):
-    if userValue == truth or (type(truth) == list and userValue in truth):
+    evaluation_result = False
+    if userValue == truth:
         button.button_style = 'success'
-        return True
+        evaluation_result = True
+    elif type(truth) == list and userValue in truth:
+        button.button_style = 'success'
+        evaluation_result = True
+    elif type(truth) == tuple and userValue >= truth[0] and userValue <= truth[1]:
+        button.button_style = 'success'
+        evaluation_result = True
     else:
         button.button_style = 'danger'
-        return False
+    return evaluation_result
 
 # Diese Funktion überprüft, ob eine gegebene Antwort mit der als "wahr" gesetzten Antwort überein stimmt
 # nachdem der "Absenden" Button gedrückt wurde, rundet ggf. den eingegebenen Wert
@@ -312,7 +320,6 @@ class Series:
         accordion_tab.nextBtn.on_click(next_btn_clicked)
 
     def addExercise(self, exercise):
-        last_solution = True
         accordion_tab = AccordionTab(str(exercise.titleClean), exercise)
         self.accordion.children += (accordion_tab.box,)
         self.accordion.set_title(
@@ -768,6 +775,190 @@ class MultipleChoiceExercise(Exercise):
         self.items.append(footer.getLayoutedWidget())
 
         self.submissionBtn = footer.submissionButton
+
+
+'''Slider für ganze Zahlen (Absenden überprüft auf Gleichheit mit true_value bzw. ob der Wert im Intervall liegt)'''
+
+
+class IntSliderExercise(Exercise):
+    def __init__(self, title, description, true_value, min_value=0, max_value=100, step=1, value_unit='%', helptext='', subtitle=''):
+        super().__init__(title, description, subtitle)
+        self.createBody(helptext, true_value, min_value,
+                        max_value, step, value_unit)
+        self.add_change_listener(self.interactiveElement, value_unit)
+
+    def createBody(self, helptext, true_value, min_value, max_value, step, value_unit):
+        # Antwortmöglichkeit
+        self.interactiveElement = widgets.IntSlider(
+            value=min_value,
+            min=min_value,
+            max=max_value,
+            step=step,
+            disabled=False,
+            continuous_update=True,
+            orientation='horizontal',
+            readout=False,
+            readout_format='d',
+            layout=widgets.Layout(width='200px')
+        )
+        self.blank = "&nbsp"*3
+        self.t = widgets.HTML(value="{}{} {}".format(
+            self.blank, self.interactiveElement.value, value_unit))
+        self.hint = widgets.HTML(value='<i>Bitte Slider bewegen</i>')
+        self.hbox = widgets.HBox(
+            [widgets.HTML("&nbsp &nbsp"), self.interactiveElement, self.t])
+
+        footer = Footer(helptext)
+
+        def send_submission(button):
+            self.logger.addSolution(self.interactiveElement.value)
+            eval_submission(footer.submissionButton,
+                            self.interactiveElement.value, true_value if type(true_value) != tuple else [i for i in range(true_value[0], true_value[1] + 1, step)])
+
+        def send_logger(b):
+            self.logger.setUsedHelp(True)
+
+        footer.helpButton.on_click(send_logger)
+        footer.submissionButton.on_click(send_submission)
+
+        self.items.append(self.getElements())
+        self.items.append(footer.getLayoutedWidget())
+
+        self.submissionBtn = footer.submissionButton
+
+    def add_change_listener(self, slider, value_unit):
+        def on_value_change(change):
+            self.t.value = "{}{} {}".format(
+                self.blank, change['new'], value_unit)
+        self.interactiveElement.observe(on_value_change, names='value')
+
+    def getValue(self):
+        return self.hbox.children[1].value
+
+    def getElements(self):
+        return widgets.VBox([self.hbox, self.hint])
+
+
+'''Slider für gleitkomma Zahlen (Absenden überprüft auf Gleichheit mit true_value bzw. ob der Wert im Intervall liegt)'''
+
+
+class FloatSliderExercise(Exercise):
+    def __init__(self, title, description, true_value, min_value=0, max_value=10, step=0.1, value_unit='', helptext='', subtitle=''):
+        super().__init__(title, description, subtitle)
+        self.createBody(helptext, true_value, min_value,
+                        max_value, step, value_unit)
+        self.add_change_listener(self.interactiveElement, value_unit)
+
+    def createBody(self, helptext, true_value, min_value, max_value, step, value_unit):
+        # Antwortmöglichkeit
+        self.interactiveElement = widgets.FloatSlider(
+            value=min_value,
+            min=min_value,
+            max=max_value,
+            step=step,
+            disabled=False,
+            continuous_update=True,
+            orientation='horizontal',
+            readout=False,
+            readout_format='d',
+            layout=widgets.Layout(width='200px')
+        )
+        self.blank = "&nbsp"*3
+        self.t = widgets.HTML(value="{}{} {}".format(
+            self.blank, self.interactiveElement.value, value_unit))
+        self.hint = widgets.HTML(value='<i>Bitte Slider bewegen</i>')
+        self.hbox = widgets.HBox(
+            [widgets.HTML("&nbsp &nbsp"), self.interactiveElement, self.t])
+
+        footer = Footer(helptext)
+
+        def send_submission(button):
+            self.logger.addSolution(self.interactiveElement.value)
+            eval_submission(footer.submissionButton,
+                            self.interactiveElement.value, true_value)
+
+        def send_logger(b):
+            self.logger.setUsedHelp(True)
+
+        footer.helpButton.on_click(send_logger)
+        footer.submissionButton.on_click(send_submission)
+
+        self.items.append(self.getElements())
+        self.items.append(footer.getLayoutedWidget())
+
+        self.submissionBtn = footer.submissionButton
+
+    def add_change_listener(self, slider, value_unit):
+        def on_value_change(change):
+            self.t.value = "{}{} {}".format(
+                self.blank, change['new'], value_unit)
+        self.interactiveElement.observe(on_value_change, names='value')
+
+    def getValue(self):
+        return self.hbox.children[1].value
+
+    def getElements(self):
+        return widgets.VBox([self.hbox, self.hint])
+
+
+'''Slider mit String als Werte (Absenden überprüft auf Gleichheit mit true_values. Wenn true_value nicht gesetzt ist, sind alle Werte richtig.)'''
+
+
+class TextSliderExercise(Exercise):
+    def __init__(self, title, description, options, true_values=[], helptext='', subtitle=''):
+        super().__init__(title, description, subtitle)
+        self.createBody(helptext, options, true_values)
+        self.add_change_listener(self.interactiveElement, options)
+
+    def createBody(self, helptext, options, true_values):
+        # Antwortmöglichkeit
+        self.interactiveElement = widgets.IntSlider(
+            value=0,
+            min=0,
+            max=len(options)-1,
+            step=1,
+            disabled=False,
+            continuous_update=True,
+            orientation='horizontal',
+            readout=False,
+            readout_format='d',
+            layout=widgets.Layout(width='200px')
+        )
+        self.blank = "&nbsp"*3
+        self.t = widgets.HTML(value="{}{}".format(
+            self.blank, options[self.interactiveElement.value]))
+        self.hint = widgets.HTML(value='<i>Bitte Slider bewegen</i>')
+        self.hbox = widgets.HBox(
+            [widgets.HTML("&nbsp &nbsp"), self.interactiveElement, self.t])
+
+        footer = Footer(helptext)
+
+        def send_submission(button):
+            self.logger.addSolution(options[self.interactiveElement.value])
+            eval_submission(footer.submissionButton,
+                            options[self.interactiveElement.value], true_values if true_values != [] else options)
+
+        def send_logger(b):
+            self.logger.setUsedHelp(True)
+
+        footer.helpButton.on_click(send_logger)
+        footer.submissionButton.on_click(send_submission)
+
+        self.items.append(self.getElements())
+        self.items.append(footer.getLayoutedWidget())
+
+        self.submissionBtn = footer.submissionButton
+
+    def add_change_listener(self, slider, options):
+        def on_value_change(change):
+            self.t.value = "{}{}".format(self.blank, options[change['new']])
+        self.interactiveElement.observe(on_value_change, names='value')
+
+    def getValue(self):
+        return self.hbox.children[1].value
+
+    def getElements(self):
+        return widgets.VBox([self.hbox, self.hint])
 
 
 '''HTML Makros'''

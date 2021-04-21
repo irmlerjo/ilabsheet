@@ -122,13 +122,48 @@ def start():
     description = '''
     Hier musst die Checkbox markiert werden, damit die Aufgabe erledigt werden kann.
     '''
-    label = 'test'
+    label = 'Bitte markieren'
     Aufgabe5 = interlab.CheckboxExercise(
-        title, description, label, helptext=helptext, subtitle=subtitle)
+        title, description, label, subtitle=subtitle)
+
+    title = 'Aufgabe 6.1'
+    subtitle = 'Slider'
+    description = '''
+    Hier musst eine Ganzzahl mit dem Slider gewählt werden. Es können mehrere richtige Lösungen als Liste gegeben werden.
+    Zusätzlich ist es möglich durch Eingabe eines Tuples (z.B. (5,10)) einen Bereich anzugeben, in dem alle Zahlen als Korrekt gelten. Dabei geht es um ein geschlossenes Intervall.
+    Außerdem lässt sich die Schrittgröße des Slieders mithilfe des Parameters 'step' einstellen.
+    Mit den Parametern 'min_value' und 'max_value', kann das Zahlenintervall des Sliders definiert werden. Ferner lässt sich der Text hinter dem Slider mit dem Parameter 'value_unit' definieren. 
+    Hier kann zum Beispiel die Einheit angegeben werden. Standardwert ist das Prozentzeichen. 
+    '''
+    helptext = 'Alle Werte zwischen 70 und 85 sind richtig.'
+    Aufgabe6_1 = interlab.IntSliderExercise(
+        title, description, (70, 85), min_value=0, max_value=100, step=5, value_unit='%', helptext=helptext, subtitle=subtitle)
+
+    title = 'Aufgabe 6.2'
+    subtitle = 'Slider'
+    description = '''
+    Hier musst eine Gleitkommazahl mit dem Slider gewählt werden. Es können mehrere richtige Lösungen als Liste gegeben werden.
+    Zusätzlich ist es möglich durch Eingabe eines Tuples (z.B. (5,10)) einen Bereich anzugeben, in dem alle Zahlen als Korrekt gelten. Dabei geht es um ein geschlossenes Intervall.
+    Außerdem lässt sich die Schrittgröße des Slieders mithilfe des Parameters 'step' einstellen.
+    Mit den Parametern 'min_value' und 'max_value', kann das Zahlenintervall des Sliders definiert werden. Ferner lässt sich der Text hinter dem Slider mit dem Parameter 'value_unit' definieren. 
+    Hier kann zum Beispiel die Einheit angegeben werden. Standardwert ist das Prozentzeichen. 
+    '''
+    helptext = 'Alle Werte zwischen 3.2 und 6.4 sind richtig.'
+    Aufgabe6_2 = interlab.FloatSliderExercise(
+        title, description, (3.2, 6.4), min_value=0.1, max_value=10, step=0.1, value_unit='€', helptext=helptext, subtitle=subtitle)
+
+    title = 'Aufgabe 6.3'
+    subtitle = 'Slider'
+    description = '''
+    Hier musst eine Textwert mit dem Slider gewählt werden. Hier wird eine Liste mit Strings erwartet, die die Optionen des Sliders angibt.
+    Es können mehrere richtige Lösungen als Liste gegeben werden. Falls keine richtige Lösung übergeben wird, sind alle Optionen richtig.
+    '''
+    Aufgabe6_3 = interlab.TextSliderExercise(
+        title, description, options=['Alle', 'Werte', 'sind', 'richtig'], subtitle=subtitle)
 
     # create a list of exercises
-    exercises = [Einleitung, Aufgabe1_1, Aufgabe1_2, Aufgabe2_1,
-                 Aufgabe2_2, Aufgabe3_1, Aufgabe3_2, Aufgabe4_1, Aufgabe4_2, Aufgabe5]
+    exercises = [Einleitung, Aufgabe1_1, Aufgabe1_2, Aufgabe2_1, Aufgabe2_2, Aufgabe3_1,
+                 Aufgabe3_2, Aufgabe4_1, Aufgabe4_2, Aufgabe5, Aufgabe6_1, Aufgabe6_2, Aufgabe6_3]
 
     # create the series
     serie = interlab.Series(exercises, 'Serie1Logger.csv')
