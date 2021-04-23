@@ -1,4 +1,4 @@
-# Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)
+# Leipzig iLabSheet
 
 ## Dokumentation
 
@@ -110,6 +110,8 @@ Es wird automatisch ein Loggingfile erstellt, in dem angegebenen Pfad. In ihm we
 
 &nbsp;
 ----------------------------------------------------------------------------------------------------
+
+## Über Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)
 
 Das [Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)](https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/) ist eine Open Education Resource, die das bekannte Python-Tool Jupyter Notebook um eine Komponente zur Integration interaktiver Kursaufgaben erweitert.
 
