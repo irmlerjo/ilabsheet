@@ -2,7 +2,7 @@
 
 Mit dem Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet) können interaktive Aufgabenblätter formuliert werden, welche einem Nutzer die Möglichkeiten geben Antworten zu verschiedenen Aufgabentypen zu beantworten. Er erhält ein direktes Feedback, ob seine Lösung korrekt ist. Optional können Hilfstexte zu einer Aufgabe hinzugefügt werden. 
 
-Das [Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)](https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/) ist eine Open Education Resource (siehe auch Lizenzierung), die das bekannte Python-Tool Jupyter Notebook um eine Komponente zur Integration interaktiver Kursaufgaben erweitert. Das Backend ist in Python 3 geschrieben. 
+Das [Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)](https://git.informatik.uni-leipzig.de/ml-group/tools/Leipzig-iLabCourse/) ist eine Open Education Resource (siehe auch Lizenzierung), die das bekannte Python-Tool Jupyter Notebook um eine Komponente zur Integration interaktiver Kursaufgaben erweitert. Das Backend ist in Python 3 geschrieben. 
 
 Leipzig iLabSheet wird seit 2019 an der Universität Leipzig von der [Arbeitsgruppe Maschinelles Lernen](https://nmi.informatik.uni-leipzig.de/ml-group/) entwickelt.
 
