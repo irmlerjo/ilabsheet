@@ -1,6 +1,4 @@
-# Leipzig iLabSheet
-
-## Dokumentation
+## Leipzig iLabSheet | Dokumentation
 
 ### Ziel:
 Mit diesem Tool können interaktive Aufgaben formuliert werden, welche einem Nutzer die Möglichkeiten geben Antworten zu verschiedenen Aufgabentypen zu beantworten. Er erhält ein direktes Feedback, ob seine Lösung korrekt ist. Optional können Hilfstexte zu einer Aufgabe hinzugefügt werden. 
