@@ -4,11 +4,23 @@ import interactiveLabCourse as interlab
 
 def start():
     # define an Exercise
-    title = 'Einleitung'
+    title = 'Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)'
     description = '''
-    Hier steht eine kleine Einleitung. Zum Beispiel eine kleine Problemstellung.<br>
-    Das alles funktioniertt mit <b>HTML</b> inklusive Zeilenumbrüche.
-    '''
+    <p>
+    Das {} ist eine Open Education Resource, die das bekannte Python-Tool Jupyter Notebook um eine Komponente zur Integration interaktiver Kursaufgaben erweitert.
+    Leipzig iLabSheet wird seit 2019 an der Universität Leipzig von der {} unter der Leitung von Thomas Schmid entwickelt (Codeautoren: Benjamin Schindler, Marlo Kriegs, Emre Arkan).
+    <p>
+    <p>
+    <h4>Lizenzierung</h4>
+    Creative Commons Namensnennung 4.0 International ({})
+    <br>Universität Leipzig | {}
+    <p>    
+    <br>Diese Maßnahme wird mitfinanziert durch Steuermittel auf der Grundlage des von den Abgeordneten des Sächsischen Landtages beschlossenen Haushaltes.
+    '''.format(
+        interlab.href('https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/', 'Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)'), 
+        interlab.href('https://nmi.informatik.uni-leipzig.de/ml-group/','Arbeitsgruppe Maschinelles Lernen'),
+        interlab.href('https://creativecommons.org/licenses/by/4.0/deed.de', 'CC BY 4.0'),
+        interlab.href('https://nmi.informatik.uni-leipzig.de/ml-group/', 'Arbeitsgruppe Maschinelles Lernen'))
 
     Einleitung = interlab.Exercise(title, description)
 
