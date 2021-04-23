@@ -1,8 +1,11 @@
 ## Leipzig iLabSheet | Dokumentation
 
-### Ziel:
-Mit diesem Tool können interaktive Aufgaben formuliert werden, welche einem Nutzer die Möglichkeiten geben Antworten zu verschiedenen Aufgabentypen zu beantworten. Er erhält ein direktes Feedback, ob seine Lösung korrekt ist. Optional können Hilfstexte zu einer Aufgabe hinzugefügt werden. 
-Das Backend ist in Python 3 geschrieben. 
+Mit dem Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet) können interaktive Aufgabenblätter für Jupyter Notebook formuliert werden, welche einem Nutzer die Möglichkeiten geben Antworten zu verschiedenen Aufgabentypen zu beantworten. Er erhält ein direktes Feedback, ob seine Lösung korrekt ist. Optional können Hilfstexte zu einer Aufgabe hinzugefügt werden. 
+
+Das [Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)](https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/) ist eine Open Education Resource (siehe auch Lizenzierung), die das bekannte Python-Tool Jupyter Notebook um eine Komponente zur Integration interaktiver Kursaufgaben erweitert. Das Backend ist in Python 3 geschrieben. 
+
+Leipzig iLabSheet wird seit 2019 an der Universität Leipzig von der [Arbeitsgruppe Maschinelles Lernen](https://nmi.informatik.uni-leipzig.de/ml-group/) entwickelt.
+
 
 ### Requirements:
 Diese Applikation benötigt eine [Python 3](https://www.python.org/downloads/) Installation.
@@ -109,13 +112,7 @@ Es wird automatisch ein Loggingfile erstellt, in dem angegebenen Pfad. In ihm we
 &nbsp;
 ----------------------------------------------------------------------------------------------------
 
-## Über Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)
-
-Das [Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)](https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/) ist eine Open Education Resource, die das bekannte Python-Tool Jupyter Notebook um eine Komponente zur Integration interaktiver Kursaufgaben erweitert.
-
-Leipzig iLabSheet wird seit 2019 an der Universität Leipzig von der [Arbeitsgruppe Maschinelles Lernen](https://nmi.informatik.uni-leipzig.de/ml-group/) unter der Leitung von Thomas Schmid entwickelt (Codeautoren: Benjamin Schindler, Marlo Kriegs, Emre Arkan).
-
-### Lizenzierung
+## Lizenzierung von Leipzig iLabSheet
 Creative Commons Namensnennung 4.0 International ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.de)) <br>
 Universität Leipzig | [Arbeitsgruppe Maschinelles Lernen](https://nmi.informatik.uni-leipzig.de/ml-group/)
 
