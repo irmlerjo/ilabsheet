@@ -1,4 +1,24 @@
 # import class
+#
+#    _ __        __   ______           __
+#   (_) /LEIPZIG/ /  / __/ /  ___ ___ / /_
+#  / / /__/ _ `/ _ \_\ \/ _ \/ -_) -_) __/
+# /_/____/\_,_/_.__/___/_//_/\__/\__/\__/
+#   INTERACTIVE LABORATORY WORKSHEET
+#
+#
+# A Project by
+# Machine Learning Group | UNIVERSITÄT LEIPZIG
+# nmi.informatik.uni-leipzig.de/ml-group
+#
+# Code Authors: Benjamin Schindler, Marlo Kriegs, Emre Arkan
+# Licence: CC-BY SA 4.0
+#
+# Diese Maßnahme wird mitfinanziert durch Steuermittel auf der Grundlage des
+# von den Abgeordneten des Sächsischen Landtages beschlossenen Haushaltes.
+#
+#
+
 import interactiveLabCourse as interlab
 
 
@@ -17,9 +37,12 @@ def start():
     <p>    
     <br>Diese Maßnahme wird mitfinanziert durch Steuermittel auf der Grundlage des von den Abgeordneten des Sächsischen Landtages beschlossenen Haushaltes.
     '''.format(
-        interlab.href('https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/', 'Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)'), 
-        interlab.href('https://nmi.informatik.uni-leipzig.de/ml-group/','Arbeitsgruppe Maschinelles Lernen'),
-        interlab.href('https://creativecommons.org/licenses/by/4.0/deed.de', 'CC BY 4.0'),
+        interlab.href('https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/',
+                      'Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)'),
+        interlab.href('https://nmi.informatik.uni-leipzig.de/ml-group/',
+                      'Arbeitsgruppe Maschinelles Lernen'),
+        interlab.href(
+            'https://creativecommons.org/licenses/by/4.0/deed.de', 'CC BY 4.0'),
         interlab.href('https://nmi.informatik.uni-leipzig.de/ml-group/', 'Arbeitsgruppe Maschinelles Lernen'))
 
     Einleitung = interlab.Exercise(title, description)
