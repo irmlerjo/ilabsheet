@@ -626,7 +626,8 @@ class SingleChoiceExercise(Exercise):
             options=options,
             description='Antwort:',
             disabled=False,
-            value=preselection
+            value=preselection,
+            layout=widgets.Layout(width="100%", flex_flow='nowrap')
         )
 
         self.items.append(self.interactiveElement)
@@ -651,8 +652,10 @@ class SingleChoiceExercise(Exercise):
 
 
 class SingleChoiceWithTextfield(Exercise):
-    def __init__(self, title, description, options, true_option, alternative_option, preselection=None, helptext='', subtitle=''):
+    def __init__(self, title, description, options, true_option, alternative_option=[], preselection=None, helptext='', subtitle=''):
         super().__init__(title, description, subtitle)
+        if alternative_option == []:
+            alternative_option = true_option
         self.createBody(helptext, options, true_option,
                         alternative_option, preselection)
         self.logger = Logger(helptext)
@@ -663,7 +666,8 @@ class SingleChoiceWithTextfield(Exercise):
             options=options,
             description='Antwort:',
             disabled=False,
-            value=preselection
+            value=preselection,
+            layout=widgets.Layout(width="100%", flex_flow='nowrap')
         )
 
         # Textarea, falls "Sonstiges" ausgewählt wird
@@ -671,16 +675,18 @@ class SingleChoiceWithTextfield(Exercise):
             value='',
             placeholder=textfield_placeholder,
             description=' ',
-            disabled=False if alternative_option == preselection else True,
+            disabled=False if preselection == alternative_option or str(
+                preselection) in alternative_option or true_option == alternative_option else True,
             layout=widgets.Layout(height="75px")
         )
 
         # change listener
         def on_value_change(change):
-            if change['new'] == alternative_option:
+
+            if change['new'] == alternative_option or change['new'] in alternative_option:
                 textfield.disabled = False
                 textfield.value = ''
-            if change['new'] != alternative_option:
+            elif change['new'] != alternative_option or change['new'] not in alternative_option:
                 textfield.disabled = True
                 textfield.value = ''
 
@@ -696,16 +702,23 @@ class SingleChoiceWithTextfield(Exercise):
         footer = Footer(helptext)
 
         def send_submission(button):
-            if self.interactiveElement.value == true_option:
+            if alternative_option == true_option == self.interactiveElement.value:
+                text = textfield.value
+                self.logger.addSolution(text)
+                if not_empty(footer.submissionButton, text):
+                    eval_submission(footer.submissionButton,
+                                    self.interactiveElement.value, true_option)
+            elif self.interactiveElement.value == true_option != alternative_option:
                 text = textfield.value
                 self.logger.addSolution(text)
                 eval_submission(footer.submissionButton,
                                 self.interactiveElement.value, true_option)
-            elif self.interactiveElement.value == alternative_option and textfield.value != '':
+            elif self.interactiveElement.value == alternative_option or self.interactiveElement.value in alternative_option:
                 text = textfield.value
                 self.logger.addSolution(text)
-                eval_submission(footer.submissionButton,
-                                self.interactiveElement.value, alternative_option)
+                if not_empty(footer.submissionButton, text):
+                    eval_submission(
+                        footer.submissionButton, self.interactiveElement.value, alternative_option)
             else:
                 self.logger.addSolution(self.interactiveElement.value)
                 eval_submission(footer.submissionButton,
@@ -722,7 +735,7 @@ class SingleChoiceWithTextfield(Exercise):
         self.submissionBtn = footer.submissionButton
 
 
-'''SingleChoice-Klasse (Absenden überprüft ob angeklicktes Feld mit true_option übereinstimmt)'''
+'''CheckBox-Klasse (Absenden überprüft ob angeklicktes Feld mit true_option übereinstimmt)'''
 
 
 class CheckboxExercise(Exercise):

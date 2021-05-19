@@ -19,7 +19,7 @@
 #
 #
 
-import interactiveLabCourse as interlab
+import iLabSheet as ils
 
 
 def start():
@@ -37,15 +37,15 @@ def start():
     <p>    
     <br>Diese Maßnahme wird mitfinanziert durch Steuermittel auf der Grundlage des von den Abgeordneten des Sächsischen Landtages beschlossenen Haushaltes.
     '''.format(
-        interlab.href('https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/',
-                      'Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)'),
-        interlab.href('https://nmi.informatik.uni-leipzig.de/ml-group/',
-                      'Arbeitsgruppe Maschinelles Lernen'),
-        interlab.href(
+        ils.href('https://git.informatik.uni-leipzig.de/ml-group/tools/iLabCourse/',
+                 'Leipzig Interactive Laboratory Worksheet (Leipzig iLabSheet)'),
+        ils.href('https://nmi.informatik.uni-leipzig.de/ml-group/',
+                 'Arbeitsgruppe Maschinelles Lernen'),
+        ils.href(
             'https://creativecommons.org/licenses/by/4.0/deed.de', 'CC BY 4.0'),
-        interlab.href('https://nmi.informatik.uni-leipzig.de/ml-group/', 'Arbeitsgruppe Maschinelles Lernen'))
+        ils.href('https://nmi.informatik.uni-leipzig.de/ml-group/', 'Arbeitsgruppe Maschinelles Lernen'))
 
-    Einleitung = interlab.Exercise(title, description)
+    Einleitung = ils.Exercise(title, description)
 
     # define a TextFieldExercise
     title = 'Aufgabe 1.1'
@@ -54,9 +54,9 @@ def start():
     Hier wird ein nicht leeres Textfeld erwartet. Sonst scheitert die Aufgabe.
     '''
     helptext = '{} können mit dem Helptext gegeben werden.'.format(
-        interlab.href('https://de.wikipedia.org/wiki/Hinweis', 'Hinweise'))
+        ils.href('https://de.wikipedia.org/wiki/Hinweis', 'Hinweise'))
 
-    Aufgabe1_1 = interlab.TextFieldExercise(
+    Aufgabe1_1 = ils.TextFieldExercise(
         title, description, helptext=helptext, subtitle=subtitle)
 
     # define a TextAreaExercise
@@ -65,7 +65,7 @@ def start():
     Hier wird ein nicht leerer Textbereich erwartet. Sonst scheitert die Aufgabe. Mehrzeilige Eingabe ist möglich.
     '''
 
-    Aufgabe1_2 = interlab.TextAreaExercise(
+    Aufgabe1_2 = ils.TextAreaExercise(
         title, description, subtitle=subtitle)
 
     # define a IntField-Exercise
@@ -77,7 +77,7 @@ def start():
     true_value = 42
     helptext = '42 ist die Antwort.'
 
-    Aufgabe2_1 = interlab.IntFieldExercise(
+    Aufgabe2_1 = ils.IntFieldExercise(
         title, description, true_value, helptext=helptext, subtitle=subtitle)
 
     # define a FloatField-Exercise
@@ -88,7 +88,7 @@ def start():
     true_value = 42.42
     helptext = '42.42 ist die Antwort.'
 
-    Aufgabe2_2 = interlab.FloatFieldExercise(
+    Aufgabe2_2 = ils.FloatFieldExercise(
         title, description, true_value, helptext=helptext, subtitle=subtitle)
 
     # define a SingleChoice-Exercise
@@ -104,7 +104,7 @@ def start():
     options = ['Option 1', 'Option 2', 'Option 3']
     true_option = ['Option 1', 'Option 3']
 
-    Aufgabe3_1 = interlab.SingleChoiceExercise(
+    Aufgabe3_1 = ils.SingleChoiceExercise(
         title, description, options, true_option, helptext=helptext, subtitle=subtitle)
 
     # define a SingleChoice-Exercise with Text Field
@@ -120,7 +120,7 @@ def start():
     alternative_option = 'Sonstiges'
     true_option = 'Option 1'
 
-    Aufgabe3_2 = interlab.SingleChoiceWithTextfield(
+    Aufgabe3_2 = ils.SingleChoiceWithTextfield(
         title, description, options, true_option, alternative_option, helptext=helptext, subtitle=subtitle)
 
     # define a MultipleChoiseExercise
@@ -134,7 +134,7 @@ def start():
     true_options = [True, False, False, True]
     helptext = 'Erste und letzte sind richtig.'
 
-    Aufgabe4_1 = interlab.MultipleChoiceExercise(
+    Aufgabe4_1 = ils.MultipleChoiceExercise(
         title, description, options, true_options, helptext=helptext, subtitle=subtitle)
 
     # define a MultipleChoiseExercise with TextArea
@@ -147,7 +147,7 @@ def start():
     options = ['Option 1', 'Option 2', 'Option 3', 'Option 4']
     helptext = 'Alle Optionen sind richtig.'
 
-    Aufgabe4_2 = interlab.MultiChoiceWithTextfield(
+    Aufgabe4_2 = ils.MultiChoiceWithTextfield(
         title, description, options, helptext=helptext, subtitle=subtitle)
 
     # define a CheckboxExercise
@@ -158,7 +158,7 @@ def start():
     Hier musst die Checkbox markiert werden, damit die Aufgabe erledigt werden kann.
     '''
     label = 'Bitte markieren'
-    Aufgabe5 = interlab.CheckboxExercise(
+    Aufgabe5 = ils.CheckboxExercise(
         title, description, label, subtitle=subtitle)
 
     title = 'Aufgabe 6.1'
@@ -171,7 +171,7 @@ def start():
     Hier kann zum Beispiel die Einheit angegeben werden. Standardwert ist das Prozentzeichen. 
     '''
     helptext = 'Alle Werte zwischen 70 und 85 sind richtig.'
-    Aufgabe6_1 = interlab.IntSliderExercise(
+    Aufgabe6_1 = ils.IntSliderExercise(
         title, description, (70, 85), min_value=0, max_value=100, step=5, value_unit='%', helptext=helptext, subtitle=subtitle)
 
     title = 'Aufgabe 6.2'
@@ -184,7 +184,7 @@ def start():
     Hier kann zum Beispiel die Einheit angegeben werden. Standardwert ist das Prozentzeichen. 
     '''
     helptext = 'Alle Werte zwischen 3.2 und 6.4 sind richtig.'
-    Aufgabe6_2 = interlab.FloatSliderExercise(
+    Aufgabe6_2 = ils.FloatSliderExercise(
         title, description, (3.2, 6.4), min_value=0.1, max_value=10, step=0.1, value_unit='€', helptext=helptext, subtitle=subtitle)
 
     title = 'Aufgabe 6.3'
@@ -193,7 +193,7 @@ def start():
     Hier musst eine Textwert mit dem Slider gewählt werden. Hier wird eine Liste mit Strings erwartet, die die Optionen des Sliders angibt.
     Es können mehrere richtige Lösungen als Liste gegeben werden. Falls keine richtige Lösung übergeben wird, sind alle Optionen richtig.
     '''
-    Aufgabe6_3 = interlab.TextSliderExercise(
+    Aufgabe6_3 = ils.TextSliderExercise(
         title, description, options=['Alle', 'Werte', 'sind', 'richtig'], subtitle=subtitle)
 
     # create a list of exercises
@@ -201,6 +201,6 @@ def start():
                  Aufgabe3_2, Aufgabe4_1, Aufgabe4_2, Aufgabe5, Aufgabe6_1, Aufgabe6_2, Aufgabe6_3]
 
     # create the series
-    serie = interlab.Series(exercises, 'Serie1Logger.csv')
+    serie = ils.Series(exercises, 'Serie1Logger.csv')
 
     display(serie.accordion)
