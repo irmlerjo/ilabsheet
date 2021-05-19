@@ -44,6 +44,9 @@ Es kann ein Zahlenwert eingegeben werden. Dieser wird mit dem richtigen Wert ver
 #### Single Choice
 Es wird überprüft, ob die Checkbox ausgewählt wurde.
 
+#### Slider
+Es wird überprüft, ob die gewählte Zahl den richtigen Wert enstrpicht oder im vorgegebenen Zahlenintervall liegt. Falls der Slider für Stringwerte verwendet wird, wird der gewählte Wert mit dem richtigen Wert verglichen.
+
 #### Bedienung:
 Es können verschiedene Bausteine zusammengesetzt werden, welche in der Python Klasse  
 *interactiveLabCourse* enthalten sind. Diese sollte daher stets zu Anfang jeder Aufgabe importiert werden, z.B.
