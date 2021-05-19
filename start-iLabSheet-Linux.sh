@@ -1,4 +1,25 @@
 #!/usr/bin/env bash
+
+#
+#    _ __        __   ______           __
+#   (_) /LEIPZIG/ /  / __/ /  ___ ___ / /_
+#  / / /__/ _ `/ _ \_\ \/ _ \/ -_) -_) __/
+# /_/____/\_,_/_.__/___/_//_/\__/\__/\__/
+#   INTERACTIVE LABORATORY WORKSHEET
+#
+#
+# A Project by
+# Machine Learning Group | UNIVERSITÄT LEIPZIG
+# nmi.informatik.uni-leipzig.de/ml-group
+#
+# Code Authors: Benjamin Schindler, Marlo Kriegs, Emre Arkan
+# Licence: CC-BY SA 4.0
+#
+# Diese Maßnahme wird mitfinanziert durch Steuermittel auf der Grundlage des
+# von den Abgeordneten des Sächsischen Landtages beschlossenen Haushaltes.
+#
+#
+
 #test if there is already one open jupyter 
 jupyter_test=$(eval "jupyter notebook list")
 
@@ -19,7 +40,6 @@ then
 fi
 
 #path starts behind .../render/
-#chromium-browser --app="data:text/html,<html><body><script>window.moveTo(1000,0);window.resizeTo(900,1020);window.location='http://localhost:8866/voila/render/Aufgaben/HandsOn_1.ipynb';</script></body></html>" &
 
 s1="data:text/html,<html><body><script>window.moveTo(1000,0);window.resizeTo(900,1020);window.location='http://localhost:8866/voila/render/Aufgaben/"
 s2="';</script></body></html>"
