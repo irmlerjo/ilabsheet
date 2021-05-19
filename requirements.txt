@@ -4,4 +4,4 @@ pandas==1.2.2
 pip-chill==1.0.0
 pylint==2.6.0
 rpy2==3.4.1
-voila==0.2.4
+voila==0.2.10
