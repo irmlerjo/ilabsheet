@@ -49,9 +49,9 @@ Es wird überprüft, ob die gewählte Zahl den richtigen Wert enstrpicht oder im
 
 #### Bedienung:
 Es können verschiedene Bausteine zusammengesetzt werden, welche in der Python Klasse  
-*interactiveLabCourse* enthalten sind. Diese sollte daher stets zu Anfang jeder Aufgabe importiert werden, z.B.
+*iLabSheet* enthalten sind. Diese sollte daher stets zu Anfang jeder Aufgabe importiert werden, z.B.
 ```python
-import interactiveLabCourse as interlab
+import iLabSheet as ils
 ```
 Zunächst müssen die einzelnen Aufgaben definiert werden und ggf. die Lösung der zu überprüfenden Größe angegeben werden, z. B.:
 
@@ -61,7 +61,7 @@ subtitle = 'Multiplikation'
 description = 'Rechnen Sie 7 * 6.'
 true_value = 42
 helptext = '42 ist die Antwort.'
-Aufgabe2 = interlab.IntFieldExercise(title, description, true_value, helptext=helptext, subtitle=subtitle)
+Aufgabe2 = ils.IntFieldExercise(title, description, true_value, helptext=helptext, subtitle=subtitle)
 ```
 Anschließend müssen alle Aufgabe als Python Liste zusammengefasst werden, z. B.:
 
@@ -72,7 +72,7 @@ Diese Liste kann dann genutzt werden, um eine Aufgabeserie zu initialisieren, z.
 
 ```python
 loggingPath = 'path/to/logging'
-series = interlab.interlab.Series(exercises, loggingPath)
+series = ils.Series(exercises, loggingPath)
 ```
 
 Anschließend kann die Serie mittels des *display* Befehls angezeigt werden, z. B.:
