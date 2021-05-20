@@ -94,19 +94,19 @@ Dazu wird das Python Package *voila* genutzt und der frei zugängliche Browser *
 für Linux:
 
 ```sh
-sh ./start-split-screen.sh NameDerAufgabenSerie.ipynb
+sh ./start-iLabSheet-Linux.sh NameDerAufgabenSerie.ipynb
 ```
 
 für MacOS:
 ```sh
-sh ./start-split-screen-macOS.sh NameDerAufgabenSerie.ipynb
+sh ./start-iLabSheet-macOS.sh NameDerAufgabenSerie.ipynb
 
 ```
 
 für Windows (innerhalb der PowerShell 7.1):
 
 ```ps1
-.\start-split-screen-windows.ps1 NameDerAufgabenSerie.ipynb
+.\start-iLabSheet-Windows.ps1 NameDerAufgabenSerie.ipynb
 ```
 
 #### Logging:
