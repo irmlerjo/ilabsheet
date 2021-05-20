@@ -141,7 +141,7 @@ def NextButton():
         description='Nächste Aufgabe',
         disabled=True,
         tooltip='Lösen Sie zuerst korrekt die Aufgabe.',
-        icon='fa-arrow-right'
+        icon='fa-arrow-right',
     )
 
 # Diese Klasse ermöglicht das Erstellen einer Multiple Choice Frage
@@ -346,7 +346,9 @@ class Series:
 
         # Titel des letzten "Nächste Aufgabe" Button ändern
         if(len(self.accordion.children) == len(self.exercises)):
-            accordion_tab.nextBtn.description = 'Beende Serie'
+            accordion_tab.nextBtn.description = 'Beende Aufgabenserie'
+            accordion_tab.nextBtn.layout=widgets.Layout(width='10%')
+
 
         def next_btn_clicked(b):
             last_solution = True
@@ -375,7 +377,7 @@ class Series:
                 last_solution = False
 
             if len(self.accordion.children) == len(self.exercises) and last_solution:
-                # also "Beende Serie" wurde gedrückt
+                # also "Beende Aufgabenserie" wurde gedrückt
                 # beende timer
                 self.exercises[self.currentExercise].logger.setEndTime(
                     time.time())
