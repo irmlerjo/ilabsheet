@@ -8,7 +8,7 @@ Leipzig iLabSheet wird seit 2019 an der Universität Leipzig von der [Arbeitsgru
 
 
 ### Requirements:
-Diese Applikation benötigt eine [Python 3](https://www.python.org/downloads/) Installation.
+Diese Applikation benötigt eine [Python 3](https://www.python.org/downloads/) Installation. Die Anwendung wurde auf der Python-Version [3.9.5](https://www.python.org/downloads/release/python-395/) getestet und läuft damit einwandfrei.
 
 Die notwendigen Python-Packages können mit dem folgenden Befehl installiert werden:
 
