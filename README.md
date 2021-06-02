@@ -21,11 +21,18 @@ Zusätlich wird auf Linux und MacOS zur Nutzung der fertigen Aufgabenserien [Chr
 
 #### Windows
 
-Auf Windows wird zur Nutzung der fertigen Aufgabenserien eine Installation von [Google Chrome](https://www.google.com/chrome/) (im Standard-Installationsordner) benötigt. Zusätlich wird [PowerShell 7.1](https://docs.microsoft.com/de-de/powershell/scripting/install/installing-powershell-core-on-windows?view=powershell-7.1) benötigt, um die Anwendung zu starten. Laden und installieren Sie hierfür die entsprechende `.msi`-Datei für Ihren Rechner auf [PowerShell Release v7.1.3](https://github.com/PowerShell/PowerShell/releases/tag/v7.1.3). Alternativ finden Sie hier die Links für [32-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x86.msi) und [64-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi).
+Auf Windows wird zur Nutzung der fertigen Aufgabenserien eine Installation von [Google Chrome](https://www.google.com/chrome/) (im Standard-Installationsordner) benötigt. Wir empfehlen die Nutzung der 64-Bit Version. Falls das nicht möglich ist, müssen die Pfade zur Google-Chrome-dict executable im Skript angepasst werden.
+
+Zusätlich wird [PowerShell 7.1](https://docs.microsoft.com/de-de/powershell/scripting/install/installing-powershell-core-on-windows?view=powershell-7.1) benötigt, um die Anwendung zu starten. Laden und installieren Sie hierfür die entsprechende `.msi`-Datei für Ihren Rechner auf [PowerShell Release v7.1.3](https://github.com/PowerShell/PowerShell/releases/tag/v7.1.3). Alternativ finden Sie hier die Links für [32-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x86.msi) und [64-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi). 
+
+Außerdem muss auf das PowerShell-Skript Zugriff gewährt werden. Hierfür werden die Eigenschaften des Skriptes mit einem Rechtklick geöffnet und das Feld `Zulassen` wird markiert:
+![Bild](images_doc/unblock_ps1_script.png)
+
+Danach lässt sich das Skript ausführen.
 
 ### Aufbau einer Aufgabenserie
 Der Aufbau einer Aufgabenserie ist wie am folgenden Bild dargestellt.
-![Bild](/images_doc/Tool_snap.PNG)
+![Bild](images_doc/Tool_snap.PNG)
 Jede Aufgabenserie besteht aus einem alle Aufgaben zusammenfassenden Element (1), einem sogenannten *Accordion*.
 Eine einzelne Aufgabe (2) hat einen Bezeichner im *Accordion* (3) und einen wahlweise unabhängigen Titel (4).
 Außerdem hat eine Aufgabe einen Aufgabentext (5), ein Feld mit Interaktionsmöglichkeiten (6), ein Button, mit dem eine Lösung bestätigt werden kann (7) und ein Button mit dem ggf. eine nächste Aufgabe des *Accordions* aufgerufen werden kann.
