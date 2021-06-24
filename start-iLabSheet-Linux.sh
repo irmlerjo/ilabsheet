@@ -29,7 +29,14 @@ then
 	sleep 5
 fi
 
-chromium-browser --app="data:text/html,<html><body><script>window.moveTo(0,0);window.resizeTo(900,1020);window.location='http://localhost:8888';</script></body></html>" &
+if [ -n "$2" ]
+then
+	notebook_location="http://localhost:8888/notebooks/$2"
+else
+	notebook_location="http://localhost:8888"
+fi
+
+chromium-browser --app="data:text/html,<html><body><script>window.moveTo(0,0);window.resizeTo(900,1020);window.location='$notebook_location';</script></body></html>" &
 
 
 voila_test=$(eval "curl localhost:8866")
@@ -41,7 +48,7 @@ fi
 
 #path starts behind .../render/
 
-s1="data:text/html,<html><body><script>window.moveTo(1000,0);window.resizeTo(900,1020);window.location='http://localhost:8866/voila/render/Aufgaben/"
+s1="data:text/html,<html><body><script>window.moveTo(1000,0);window.resizeTo(900,1020);window.location='http://localhost:8866/voila/render/"
 s2="';</script></body></html>"
 s3=$s1$1$s2
 

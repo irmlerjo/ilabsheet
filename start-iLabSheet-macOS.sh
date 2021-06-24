@@ -29,7 +29,14 @@ then
 	sleep 5
 fi
 
-/Applications/Chromium.app/Contents/MacOS/Chromium --app="data:text/html,<html><body><script>window.moveTo(0,0);window.resizeTo(window.screen.width/2,window.screen.height);window.location='http://localhost:8888';</script></body></html>" &
+if [ -n "$2" ]
+then
+	notebook_location="http://localhost:8888/notebooks/$2"
+else
+	notebook_location="http://localhost:8888"
+fi
+
+/Applications/Chromium.app/Contents/MacOS/Chromium --app="data:text/html,<html><body><script>window.moveTo(0,0);window.resizeTo(window.screen.width/2,window.screen.height);window.location='$notebook_location';</script></body></html>" &
 
 
 voila_test=$(eval "curl localhost:8866")

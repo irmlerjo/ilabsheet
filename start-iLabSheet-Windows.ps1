@@ -18,6 +18,18 @@
 #
 #
 
+$chrome_64_path = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+$chrome_32_path = 'C:\Program Files (x86)\Google\Chrome\Application\chrome.exe'
+
+if (Test-Path -Path $chrome_64_path -PathType Leaf) {
+    $chrome_path = $chrome_64_path
+} elseif (Test-Path -Path $chrome_32_path -PathType Leaf) {
+    $chrome_path = $chrome_32_path
+} else {
+    write-host("No Google Chrome Installation was found on the default location. Please install Google Chrome in the default installation folder.")
+    exit
+}
+
 $jupyter_test = Invoke-Expression "jupyter notebook list"
 if (-not ($jupyter_test -match "http"))
 {
@@ -26,7 +38,14 @@ if (-not ($jupyter_test -match "http"))
 	Start-Sleep -s 5
 }
 
-Start-Process -FilePath 'C:\Program Files\Google\Chrome\Application\chrome.exe' --app="data:text/html,<html><body><script>window.moveTo(0,0);window.resizeTo(window.screen.width/2,window.screen.height);window.location='http://localhost:8888';</script></body></html>" &
+if ($args[1] -eq $null) {
+    $notebook_location = "http://localhost:8888"
+} else {
+    $notebok_name = $args[1]
+    $notebook_location = "http://localhost:8888/notebooks/$notebok_name"
+}
+
+Start-Process -FilePath $chrome_path --app="data:text/html,<html><body><script>window.moveTo(0,0);window.resizeTo(window.screen.width/2,window.screen.height);window.location='$notebook_location';</script></body></html>" &
 
 $voila_test = Invoke-Expression "curl localhost:8866"
 
@@ -40,6 +59,6 @@ $s1="data:text/html,<html><body><script>window.moveTo(window.screen.width/2,0);w
 $s2="';</script></body></html>"
 $s3= -join($s1,$args[0],$s2)
 
-Start-Process -FilePath 'C:\Program Files\Google\Chrome\Application\chrome.exe' --app=$s3
+Start-Process -FilePath $chrome_path --app=$s3
 
 jupyter notebook list
