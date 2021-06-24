@@ -23,6 +23,8 @@ Zusätlich wird auf Linux und MacOS zur Nutzung der fertigen Aufgabenserien [Chr
 
 Auf Windows wird zur Nutzung der fertigen Aufgabenserien eine Installation von [Google Chrome](https://www.google.com/chrome/) (im Standard-Installationsordner) benötigt. Wir empfehlen die Nutzung der 64-Bit Version. Falls das nicht möglich ist, müssen die Pfade zur Google-Chrome-dict executable im Skript angepasst werden.
 
+Ferner ist es be Windows erforderlich, dass der Pfad für Python in die Path-Variable eingefügt wird. Hierfür gibt es eine Anleietung [hier](https://datatofish.com/add-python-to-windows-path/).
+
 Zusätlich wird [PowerShell 7.1](https://docs.microsoft.com/de-de/powershell/scripting/install/installing-powershell-core-on-windows?view=powershell-7.1) benötigt, um die Anwendung zu starten. Laden und installieren Sie hierfür die entsprechende `.msi`-Datei für Ihren Rechner auf [PowerShell Release v7.1.3](https://github.com/PowerShell/PowerShell/releases/tag/v7.1.3). Alternativ finden Sie hier die Links für [32-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x86.msi) und [64-Bit](https://github.com/PowerShell/PowerShell/releases/download/v7.1.3/PowerShell-7.1.3-win-x64.msi). 
 
 Außerdem muss auf das PowerShell-Skript Zugriff gewährt werden. Hierfür werden die Eigenschaften des Skriptes mit einem Rechtklick geöffnet und das Feld `Zulassen` wird markiert:
