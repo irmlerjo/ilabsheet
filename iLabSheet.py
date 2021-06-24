@@ -20,6 +20,7 @@
 
 import ipywidgets as widgets
 from IPython.display import display
+from pathlib import Path
 import time
 import csv
 import math
@@ -299,7 +300,8 @@ class Series:
         self.accordion = widgets.Accordion()
         self.exercises = exercises
         self.currentExercise = 0
-        self.path = str(os.getlogin()) + "_" + path
+        Path('Log').mkdir(parents=True, exist_ok=True)
+        self.path = os.path.join("Log", str(os.getlogin()) + "_" + path)
 
         self.initLoggingFile()
         self.addPathToLoggers()
