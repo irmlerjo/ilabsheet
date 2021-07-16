@@ -798,9 +798,12 @@ class MultipleChoiceExercise(Exercise):
         footer = Footer(helptext)
 
         def send_submission(button):
-            self.logger.addSolution(self.interactiveElement.getValues())
+            answer = self.interactiveElement.getValues()
+            self.logger.addSolution(answer)
+            if type(true_options) == int:
+                answer = list(answer).count(True)
             eval_submission(footer.submissionButton,
-                            self.interactiveElement.getValues(), true_options)
+                            answer, true_options)
 
         def send_logger(b):
             self.logger.setUsedHelp(True)
@@ -811,7 +814,6 @@ class MultipleChoiceExercise(Exercise):
         self.items.append(footer.getLayoutedWidget())
 
         self.submissionBtn = footer.submissionButton
-
 
 '''Slider für ganze Zahlen (Absenden überprüft auf Gleichheit mit true_value bzw. ob der Wert im Intervall liegt)'''
 
