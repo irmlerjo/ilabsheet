@@ -739,7 +739,7 @@ class SingleChoiceWithTextfield(Exercise):
         self.submissionBtn = footer.submissionButton
 
 
-'''CheckBox-Klasse (Absenden überprüft ob angeklicktes Feld mit true_option übereinstimmt)'''
+'''CheckBox-Klasse (Absenden überprüft, ob der Checkbox markiert wurde)'''
 
 
 class CheckboxExercise(Exercise):
