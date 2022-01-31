@@ -125,7 +125,7 @@ Es wird automatisch ein Loggingfile erstellt, in dem angegebenen Pfad. In ihm we
 ----------------------------------------------------------------------------------------------------
 
 ## Lizenzierung von Leipzig iLabSheet
-Creative Commons Namensnennung 4.0 International ([CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.de)) <br>
+GNU General Public License 3 ([GPLv3](https://www.gnu.org/licenses/gpl-3.0.de.html)) <br>
 Universität Leipzig | [Arbeitsgruppe Maschinelles Lernen](https://nmi.informatik.uni-leipzig.de/ml-group/)
 
 Diese Maßnahme wird mitfinanziert durch Steuermittel auf der Grundlage des von den Abgeordneten des Sächsischen Landtages beschlossenen Haushaltes.
