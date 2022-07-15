@@ -301,7 +301,7 @@ class Series:
         self.exercises = exercises
         self.currentExercise = 0
         Path('Log').mkdir(parents=True, exist_ok=True)
-        self.path = os.path.join("Log", str(os.getlogin()) + "_" + path)
+        self.path = os.path.join("Log", "_" + path)#TODO Comment back in TODO# str(os.getlogin()) + "_" + path)
 
         self.initLoggingFile()
         self.addPathToLoggers()

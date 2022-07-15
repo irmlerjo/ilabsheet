@@ -200,8 +200,8 @@ def start():
                  Aufgabe3_2, Aufgabe4_1, Aufgabe4_2, Aufgabe5, Aufgabe6_1, Aufgabe6_2, Aufgabe6_3]
 
     # create the series
-    
-    #TODO Comment back in!
-    #serie = ils.Series(exercises, 'Serie1Logger.csv')
 
-    #display(serie.accordion)
+    #TODO Comment back in!
+    serie = ils.Series(exercises, 'Serie1Logger.csv')
+
+    display(serie.accordion)
