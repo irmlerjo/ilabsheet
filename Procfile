@@ -1,1 +1,1 @@
-web: voila --port=$PORT --no-browser SampleSinus.ipynb
+web: voila --port=$PORT --no-browser ExampleLabSheet.ipynb
