@@ -1,1 +1,1 @@
-web: voila --port=$PORT --no-browser --enable_nbextensions=True SampleSinus.ipynb
+web: voila --port=$PORT --no-browser SampleSinus.ipynb
