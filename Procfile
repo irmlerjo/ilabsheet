@@ -1,1 +1,1 @@
-web: ./start-iLabSheet-Linux.sh
+web: ./heroku-iLabSheet.sh
