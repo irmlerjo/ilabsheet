@@ -19,4 +19,4 @@
 # von den Abgeordneten des Sächsischen Landtages beschlossenen Haushaltes.
 #
 #
-voila --port=$PORT --no-browser --enable_nbextensions=True ExampleLabSheet.ipynb
+voila --port=$PORT --no-browser --enable_nbextensions=True SampleSinus.ipynb
