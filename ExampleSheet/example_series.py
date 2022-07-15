@@ -204,4 +204,4 @@ def start():
     #TODO Comment back in!
     #serie = ils.Series(exercises, 'Serie1Logger.csv')
 
-    display(serie.accordion)
+    #display(serie.accordion)
